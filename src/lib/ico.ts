@@ -28,11 +28,15 @@ export function isValidIcoChecksum(input: string): boolean {
   return digits[7] === check;
 }
 
-export function validateIco(input: string): { ok: true; ico: string } | { ok: false; error: string } {
+export type IcoErrorCode = "required" | "digits" | "checksum";
+
+export function validateIco(
+  input: string
+): { ok: true; ico: string } | { ok: false; code: IcoErrorCode } {
   const trimmed = input.trim();
-  if (!trimmed) return { ok: false, error: "IČO je povinné." };
-  if (!isValidIcoFormat(trimmed)) return { ok: false, error: "IČO smí obsahovat pouze číslice (1–8)." };
+  if (!trimmed) return { ok: false, code: "required" };
+  if (!isValidIcoFormat(trimmed)) return { ok: false, code: "digits" };
   const ico = normalizeIco(trimmed);
-  if (!isValidIcoChecksum(ico)) return { ok: false, error: "IČO má neplatný kontrolní součet." };
+  if (!isValidIcoChecksum(ico)) return { ok: false, code: "checksum" };
   return { ok: true, ico };
 }

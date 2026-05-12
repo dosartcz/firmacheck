@@ -40,7 +40,6 @@ export interface NameMatchResult {
   kind: NameMatchKind;
   inputName: string;
   aresName: string;
-  message: string;
 }
 
 export interface SavedCompany extends CompanyData {

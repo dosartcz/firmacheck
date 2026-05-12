@@ -1,31 +1,33 @@
+"use client";
+
 import Image from "next/image";
+import { useT } from "@/lib/i18n";
 
 /**
  * Placeholder for an AI-generated hero illustration.
- * Replace /public/hero-illustration.png with a real Midjourney / DALL·E / Imagen output.
+ * Replace /public/hero-illustration.svg with a real Midjourney / DALL·E / Imagen output.
  * See AI_PROMPTS.md for the prompt used.
  */
 export function HeroIllustration() {
+  const { t } = useT();
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-br from-sky-50 via-white to-emerald-50 p-6">
+    <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-br from-sky-50 via-white to-emerald-50 p-6 dark:border-slate-800 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800">
       <div className="grid items-center gap-6 sm:grid-cols-[2fr_1fr]">
         <div>
-          <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-sky-700">
-            FirmaCheck
+          <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-[#d6795b]">
+            {t("heroEyebrow")}
           </p>
-          <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-            Ověřte českou firmu za pár sekund.
+          <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-slate-100">
+            {t("heroHeading")}
           </h1>
-          <p className="mt-3 max-w-prose text-slate-600">
-            Zadejte IČO, případně i název. Aplikace načte aktuální údaje
-            z ARESu, zobrazí sídlo firmy na mapě, uloží odpověď do
-            SQLite cache a umožní vám firmy hromadně exportovat.
+          <p className="mt-3 max-w-prose text-slate-600 dark:text-slate-300">
+            {t("heroSubheading")}
           </p>
         </div>
         <div className="relative mx-auto aspect-square w-44 sm:w-full sm:max-w-[220px]">
           <Image
             src="/hero-illustration.svg"
-            alt="Ilustrace ověřování firmy"
+            alt={t("heroIllustrationAlt")}
             fill
             priority
             className="object-contain"

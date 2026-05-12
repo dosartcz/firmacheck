@@ -5,7 +5,9 @@ import { CompanyForm } from "@/components/CompanyForm";
 import { CompanyDetail } from "@/components/CompanyDetail";
 import { SavedCompanies } from "@/components/SavedCompanies";
 import { HeroIllustration } from "@/components/HeroIllustration";
+import { TopBar } from "@/components/TopBar";
 import { VerificationBadge } from "@/components/StatusBadge";
+import { useT } from "@/lib/i18n";
 import { compareNames } from "@/lib/compare";
 import { geocodeAddress } from "@/lib/geocoding";
 import {
@@ -28,6 +30,7 @@ import type {
 } from "@/types";
 
 export default function HomePage() {
+  const { t } = useT();
   const [status, setStatus] = useState<VerificationStatus>("idle");
   const [company, setCompany] = useState<CompanyData | null>(null);
   const [aresSource, setAresSource] = useState<DataSource | null>(null);
@@ -37,7 +40,8 @@ export default function HomePage() {
   );
   const [geocodingError, setGeocodingError] = useState<string | null>(null);
   const [nameMatch, setNameMatch] = useState<NameMatchResult | null>(null);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorKind, setErrorKind] = useState<"not_found" | "generic" | null>(null);
+  const [errorDetail, setErrorDetail] = useState<string | null>(null);
   const [saved, setSaved] = useState<SavedCompany[]>([]);
   const [savedFlag, setSavedFlag] = useState<boolean>(false);
 
@@ -58,7 +62,8 @@ export default function HomePage() {
     setGeocodingSource(null);
     setGeocodingError(null);
     setNameMatch(null);
-    setErrorMessage(null);
+    setErrorKind(null);
+    setErrorDetail(null);
 
     let companyData: CompanyData | null = null;
     let source: DataSource;
@@ -72,12 +77,13 @@ export default function HomePage() {
         const body = await res.json();
         if (res.status === 404) {
           setStatus("not_found");
-          setErrorMessage(body.error ?? "Firma nenalezena.");
+          setErrorKind("not_found");
           return;
         }
         if (!res.ok) {
           setStatus("error");
-          setErrorMessage(body.error ?? `Chyba ${res.status}.`);
+          setErrorKind("generic");
+          setErrorDetail(body.error ?? null);
           return;
         }
         companyData = body.company as CompanyData;
@@ -86,9 +92,8 @@ export default function HomePage() {
       }
     } catch (e) {
       setStatus("error");
-      setErrorMessage(
-        e instanceof Error ? e.message : "Selhalo načítání z ARES."
-      );
+      setErrorKind("generic");
+      setErrorDetail(e instanceof Error ? e.message : null);
       return;
     }
 
@@ -114,12 +119,12 @@ export default function HomePage() {
       }
     } catch (e) {
       setGeocodingError(
-        e instanceof Error ? e.message : "Geocoding selhal."
+        e instanceof Error ? e.message : t("pageGeocodingError")
       );
     }
 
     setStatus("found");
-  }, []);
+  }, [t]);
 
   const openSaved = useCallback(
     (ico: string) => {
@@ -155,81 +160,81 @@ export default function HomePage() {
   );
 
   return (
-    <main className="mx-auto w-full max-w-5xl space-y-6 p-4 sm:p-6 lg:p-8">
-      <HeroIllustration />
+    <>
+      <TopBar />
+      <main className="mx-auto w-full max-w-5xl space-y-6 p-4 sm:p-6 lg:p-8">
+        <HeroIllustration />
 
-      <CompanyForm onSubmit={verify} loading={status === "loading"} />
+        <CompanyForm onSubmit={verify} loading={status === "loading"} />
 
-      {status !== "idle" && (
-        <div>
-          {status === "loading" && (
-            <VerificationBadge kind="loading" text="Načítám data…" />
-          )}
-          {status === "found" && (
-            <VerificationBadge kind="found" text="✓ Firma nalezena" />
-          )}
-          {status === "not_found" && (
-            <div className="space-y-2">
-              <VerificationBadge
-                kind="not_found"
-                text="Firma nenalezena v ARES"
-              />
-              {errorMessage && (
-                <p className="text-sm text-slate-600">{errorMessage}</p>
-              )}
-            </div>
-          )}
-          {status === "error" && (
-            <div className="space-y-2">
-              <VerificationBadge kind="error" text="Chyba při načítání" />
-              {errorMessage && (
-                <p className="text-sm text-rose-700">{errorMessage}</p>
-              )}
-            </div>
-          )}
-        </div>
-      )}
+        {status !== "idle" && (
+          <div>
+            {status === "loading" && (
+              <VerificationBadge kind="loading" text={t("statusLoading")} />
+            )}
+            {status === "found" && (
+              <VerificationBadge kind="found" text={t("statusFound")} />
+            )}
+            {status === "not_found" && (
+              <div className="space-y-2">
+                <VerificationBadge kind="not_found" text={t("statusNotFound")} />
+                <p className="text-sm text-slate-600 dark:text-slate-400">
+                  {t("pageNotFoundMessage")}
+                </p>
+              </div>
+            )}
+            {status === "error" && (
+              <div className="space-y-2">
+                <VerificationBadge kind="error" text={t("statusError")} />
+                <p className="text-sm text-rose-700 dark:text-rose-400">
+                  {errorDetail ?? t("pageGenericErrorMessage")}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
 
-      {company && status === "found" && aresSource && (
-        <CompanyDetail
-          company={company}
-          aresSource={aresSource}
-          coords={coords}
-          geocodingSource={geocodingSource}
-          geocodingError={geocodingError}
-          nameMatch={nameMatch}
-          isSaved={savedFlag}
-          onSave={handleSave}
-          onRemove={handleRemoveFromDetail}
+        {company && status === "found" && aresSource && (
+          <CompanyDetail
+            company={company}
+            aresSource={aresSource}
+            coords={coords}
+            geocodingSource={geocodingSource}
+            geocodingError={geocodingError}
+            nameMatch={nameMatch}
+            isSaved={savedFlag}
+            onSave={handleSave}
+            onRemove={handleRemoveFromDetail}
+          />
+        )}
+
+        <SavedCompanies
+          companies={saved}
+          onOpen={openSaved}
+          onRemove={handleRemoveFromList}
         />
-      )}
 
-      <SavedCompanies
-        companies={saved}
-        onOpen={openSaved}
-        onRemove={handleRemoveFromList}
-      />
-
-      <footer className="pt-4 text-center text-xs text-slate-400">
-        FirmaCheck · data ze státního{" "}
-        <a
-          href="https://ares.gov.cz"
-          target="_blank"
-          rel="noopener"
-          className="underline"
-        >
-          ARES
-        </a>{" "}
-        · mapa{" "}
-        <a
-          href="https://mapy.com"
-          target="_blank"
-          rel="noopener"
-          className="underline"
-        >
-          Mapy.com
-        </a>
-      </footer>
-    </main>
+        <footer className="pt-4 text-center text-xs text-slate-400 dark:text-slate-500">
+          FirmaCzech od Adama &amp; Clauda · {t("footerData")}{" "}
+          <a
+            href="https://ares.gov.cz"
+            target="_blank"
+            rel="noopener"
+            className="underline hover:text-slate-600 dark:hover:text-slate-300"
+          >
+            ARES
+          </a>{" "}
+          · {t("footerMap")}{" "}
+          <a
+            href="https://mapy.com"
+            target="_blank"
+            rel="noopener"
+            className="underline hover:text-slate-600 dark:hover:text-slate-300"
+          >
+            Mapy.com
+          </a>
+        </footer>
+      </main>
+    </>
   );
 }

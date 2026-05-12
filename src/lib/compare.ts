@@ -42,27 +42,12 @@ export function compareNames(input: string, aresName: string): NameMatchResult {
   const bCore = stripLegalForm(b);
 
   if (a === b || aCore === bCore) {
-    return {
-      kind: "exact",
-      inputName: trimmedInput,
-      aresName,
-      message: `Zadaný název „${trimmedInput}" přesně odpovídá firmě „${aresName}".`,
-    };
+    return { kind: "exact", inputName: trimmedInput, aresName };
   }
 
   if (aCore && bCore && (bCore.includes(aCore) || aCore.includes(bCore))) {
-    return {
-      kind: "partial",
-      inputName: trimmedInput,
-      aresName,
-      message: `Zadaný název „${trimmedInput}" částečně odpovídá firmě „${aresName}".`,
-    };
+    return { kind: "partial", inputName: trimmedInput, aresName };
   }
 
-  return {
-    kind: "mismatch",
-    inputName: trimmedInput,
-    aresName,
-    message: `Zadaný název „${trimmedInput}" se liší od názvu v ARES „${aresName}".`,
-  };
+  return { kind: "mismatch", inputName: trimmedInput, aresName };
 }

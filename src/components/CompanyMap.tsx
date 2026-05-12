@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import type { Coordinates } from "@/types";
+import { useT } from "@/lib/i18n";
 
 interface CompanyMapProps {
   coords: Coordinates;
@@ -14,6 +15,7 @@ const MAPY_TILE_URL =
   "https://api.mapy.com/v1/maptiles/basic/256/{z}/{x}/{y}?apikey={apikey}";
 
 export function CompanyMap({ coords, address }: CompanyMapProps) {
+  const { t } = useT();
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
   const markerRef = useRef<L.Marker | null>(null);
@@ -39,7 +41,6 @@ export function CompanyMap({ coords, address }: CompanyMapProps) {
           '<a href="https://mapy.com/" target="_blank" rel="noopener">Mapy.com</a>',
       }).addTo(map);
 
-      // Mapy.com required logo control
       const logo = new L.Control({ position: "bottomleft" });
       logo.onAdd = () => {
         const div = L.DomUtil.create("div");
@@ -89,9 +90,9 @@ export function CompanyMap({ coords, address }: CompanyMapProps) {
     <div className="space-y-2">
       <div
         ref={containerRef}
-        className="h-72 w-full overflow-hidden rounded-xl border border-slate-200"
+        className="h-72 w-full overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800"
       />
-      <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-slate-600">
+      <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-slate-600 dark:text-slate-400">
         <span className="font-mono">
           {coords.lat.toFixed(6)}, {coords.lng.toFixed(6)}
         </span>
@@ -99,14 +100,14 @@ export function CompanyMap({ coords, address }: CompanyMapProps) {
           href={mapyUrl}
           target="_blank"
           rel="noopener"
-          className="font-medium text-sky-700 underline-offset-2 hover:underline"
+          className="font-medium text-sky-700 underline-offset-2 hover:underline dark:text-sky-400"
         >
-          Otevřít na Mapy.com →
+          {t("mapOpenExternal")}
         </a>
       </div>
       {!useMapy && (
-        <p className="text-xs text-amber-700">
-          NEXT_PUBLIC_MAPY_API_KEY není nastaven — používá se OpenStreetMap fallback.
+        <p className="text-xs text-amber-700 dark:text-amber-400">
+          {t("mapNoKey")}
         </p>
       )}
     </div>
