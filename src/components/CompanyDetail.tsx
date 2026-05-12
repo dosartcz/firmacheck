@@ -31,6 +31,7 @@ interface CompanyDetailProps {
   isSaved: boolean;
   onSave: () => void;
   onRemove: () => void;
+  onClose: () => void;
 }
 
 export function CompanyDetail({
@@ -43,6 +44,7 @@ export function CompanyDetail({
   isSaved,
   onSave,
   onRemove,
+  onClose,
 }: CompanyDetailProps) {
   const { t } = useT();
   const isDissolved = Boolean(company.dissolvedDate);
@@ -60,28 +62,36 @@ export function CompanyDetail({
             {t("detailIcoLabel")} {company.ico}
           </p>
         </div>
-        <div className="flex flex-col items-end gap-2">
+        <div className="flex flex-col items-start gap-2 sm:items-end">
           <div className="flex flex-wrap gap-2">
             <SourceBadge label={t("sourceAres")} source={aresSource} />
             {geocodingSource && (
               <SourceBadge label={t("sourceGeocoding")} source={geocodingSource} />
             )}
           </div>
-          {isSaved ? (
+          <div className="flex flex-wrap gap-2">
+            {isSaved ? (
+              <button
+                onClick={onRemove}
+                className="rounded-lg border border-rose-200 bg-rose-50 px-3 py-1.5 text-sm font-medium text-rose-700 transition hover:bg-rose-100 dark:border-rose-800 dark:bg-rose-950/50 dark:text-rose-300 dark:hover:bg-rose-900/50"
+              >
+                {t("detailRemoveCta")}
+              </button>
+            ) : (
+              <button
+                onClick={onSave}
+                className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-sm font-medium text-emerald-700 transition hover:bg-emerald-100 dark:border-emerald-800 dark:bg-emerald-950/50 dark:text-emerald-300 dark:hover:bg-emerald-900/50"
+              >
+                {t("detailSaveCta")}
+              </button>
+            )}
             <button
-              onClick={onRemove}
-              className="rounded-lg border border-rose-200 bg-rose-50 px-3 py-1.5 text-sm font-medium text-rose-700 transition hover:bg-rose-100 dark:border-rose-800 dark:bg-rose-950/50 dark:text-rose-300 dark:hover:bg-rose-900/50"
+              onClick={onClose}
+              className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-500 transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-400 dark:hover:bg-slate-700/50"
             >
-              {t("detailRemoveCta")}
+              {t("detailCloseCta")}
             </button>
-          ) : (
-            <button
-              onClick={onSave}
-              className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-sm font-medium text-emerald-700 transition hover:bg-emerald-100 dark:border-emerald-800 dark:bg-emerald-950/50 dark:text-emerald-300 dark:hover:bg-emerald-900/50"
-            >
-              {t("detailSaveCta")}
-            </button>
-          )}
+          </div>
         </div>
       </div>
 

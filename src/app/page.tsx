@@ -150,6 +150,11 @@ export default function HomePage() {
     await refreshSaved();
   }, [company, refreshSaved]);
 
+  const handleClose = useCallback(() => {
+    setStatus("idle");
+    setCompany(null);
+  }, []);
+
   const handleRemoveFromList = useCallback(
     async (ico: string) => {
       await deleteSavedCompany(ico);
@@ -205,6 +210,7 @@ export default function HomePage() {
             isSaved={savedFlag}
             onSave={handleSave}
             onRemove={handleRemoveFromDetail}
+            onClose={handleClose}
           />
         )}
 

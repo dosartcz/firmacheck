@@ -49,6 +49,7 @@ interface Dict {
   detailIcoLabel: string;
   detailSaveCta: string;
   detailRemoveCta: string;
+  detailCloseCta: string;
   detailLegalForm: string;
   detailStatus: string;
   detailStatusActive: string;
@@ -135,6 +136,7 @@ const cs: Dict = {
   detailIcoLabel: "IČO",
   detailSaveCta: "+ Uložit firmu",
   detailRemoveCta: "Odebrat z uložených",
+  detailCloseCta: "Zavřít výpis",
   detailLegalForm: "Právní forma",
   detailStatus: "Stav subjektu",
   detailStatusActive: "Aktivní",
@@ -219,6 +221,7 @@ const en: Dict = {
   detailIcoLabel: "IČO",
   detailSaveCta: "+ Save company",
   detailRemoveCta: "Remove from saved",
+  detailCloseCta: "Close",
   detailLegalForm: "Legal form",
   detailStatus: "Status",
   detailStatusActive: "Active",
@@ -303,6 +306,7 @@ const de: Dict = {
   detailIcoLabel: "IČO",
   detailSaveCta: "+ Firma speichern",
   detailRemoveCta: "Aus den Gespeicherten entfernen",
+  detailCloseCta: "Schließen",
   detailLegalForm: "Rechtsform",
   detailStatus: "Status",
   detailStatusActive: "Aktiv",
