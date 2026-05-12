@@ -4,7 +4,7 @@ Webová aplikace pro rychlé ověření základních údajů o české firmě po
 Načte data z **ARES**, zobrazí sídlo na mapě **Mapy.com**, uloží odpovědi do
 **SQLite cache** v prohlížeči a umožní firmy hromadně exportovat do CSV/JSON.
 
-> **Živé demo:** _doplnit po nasazení na Vercel_
+> **Živé demo:** <https://firmacheck.vercel.app>
 
 ---
 
