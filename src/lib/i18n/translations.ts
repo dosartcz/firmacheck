@@ -92,6 +92,10 @@ interface Dict {
   pageNetworkError: string;
   pageGeocodingError: string;
 
+  // 404
+  notFoundHeading: string;
+  notFoundBack: string;
+
   // Footer
   footerData: string;
   footerMap: string;
@@ -181,6 +185,8 @@ const cs: Dict = {
   pageNetworkError: "Selhalo načítání z ARES.",
   pageGeocodingError: "Geocoding selhal.",
 
+  notFoundHeading: "Toto není ta stránka, kterou hledáte.",
+  notFoundBack: "Zpět na úvod",
   footerData: "data ze státního",
   footerMap: "mapa",
 
@@ -267,6 +273,8 @@ const en: Dict = {
   pageNetworkError: "Failed to fetch from ARES.",
   pageGeocodingError: "Geocoding failed.",
 
+  notFoundHeading: "This is not the page you are looking for.",
+  notFoundBack: "Back to home",
   footerData: "data from the official",
   footerMap: "map",
 
@@ -354,6 +362,8 @@ const de: Dict = {
   pageNetworkError: "Laden aus ARES fehlgeschlagen.",
   pageGeocodingError: "Geocoding fehlgeschlagen.",
 
+  notFoundHeading: "Dies ist nicht die Seite, die Sie suchen.",
+  notFoundBack: "Zurück zur Startseite",
   footerData: "Daten vom staatlichen",
   footerMap: "Karte",
 
