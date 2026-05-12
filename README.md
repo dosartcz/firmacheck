@@ -46,7 +46,7 @@ Načte data z **ARES**, zobrazí sídlo na mapě **Mapy.com**, uloží odpovědi
 ## Spuštění lokálně
 
 ```bash
-git clone https://github.com/<uzivatel>/firmacheck.git
+git clone https://github.com/dosartcz/firmacheck.git
 cd firmacheck
 npm install
 cp .env.example .env.local
@@ -63,7 +63,7 @@ Aplikace běží na <http://localhost:3000>.
 1. Pushni repozitář na GitHub.
 2. Na [vercel.com](https://vercel.com) → **New Project** → import GitHub repo.
 3. Framework preset se autodetekuje jako **Next.js**, nic není potřeba měnit.
-4. V **Environment Variables** přidej `NEXT_PUBLIC_MAPY_API_KEY` s tvým klíčem.
+4. V **Environment Variables** vlož proměnnou `NEXT_PUBLIC_MAPY_API_KEY` — hodnotu (API klíč) získáš na [developer.mapy.com](https://developer.mapy.com/) po registraci.
 5. **Deploy**.
 
 Build trvá ~1 minutu. Vercel nasazuje na unikátní `*.vercel.app` URL.
