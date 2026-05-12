@@ -29,7 +29,7 @@ export function HeroIllustration() {
         </div>
         <div className="relative mx-auto aspect-square w-44 sm:w-full sm:max-w-[220px]">
           <Image
-            src="/hero-illustration.webp"
+            src="/hero-illustration.svg"
             alt={t("heroIllustrationAlt")}
             fill
             priority
