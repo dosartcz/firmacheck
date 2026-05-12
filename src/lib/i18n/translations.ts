@@ -81,6 +81,9 @@ interface Dict {
   savedCopyJson: string;
   savedCopiedJson: string;
   savedCopyError: string;
+  savedShare: string;
+  savedShareSubject: string;
+  savedShareBody: string;
   savedVerifiedAt: string;
   savedSourceLabel: string;
   savedActionDetail: string;
@@ -175,6 +178,9 @@ const cs: Dict = {
   savedCopyJson: "Kopírovat JSON",
   savedCopiedJson: "✓ Zkopírováno",
   savedCopyError: "Kopírování do schránky se nezdařilo.",
+  savedShare: "Sdílet seznam",
+  savedShareSubject: "Seznam firem z FirmaCzech",
+  savedShareBody: "Seznam ověřených firem:",
   savedVerifiedAt: "Ověřeno",
   savedSourceLabel: "zdroj",
   savedActionDetail: "Detail",
@@ -263,6 +269,9 @@ const en: Dict = {
   savedCopyJson: "Copy JSON",
   savedCopiedJson: "✓ Copied",
   savedCopyError: "Copy to clipboard failed.",
+  savedShare: "Share list",
+  savedShareSubject: "Company list from FirmaCzech",
+  savedShareBody: "List of verified companies:",
   savedVerifiedAt: "Verified",
   savedSourceLabel: "source",
   savedActionDetail: "Detail",
@@ -351,6 +360,9 @@ const de: Dict = {
   savedCopyJson: "JSON kopieren",
   savedCopiedJson: "✓ Kopiert",
   savedCopyError: "Kopieren in die Zwischenablage fehlgeschlagen.",
+  savedShare: "Liste teilen",
+  savedShareSubject: "Firmenliste aus FirmaCzech",
+  savedShareBody: "Liste geprüfter Firmen:",
   savedVerifiedAt: "Geprüft",
   savedSourceLabel: "Quelle",
   savedActionDetail: "Detail",

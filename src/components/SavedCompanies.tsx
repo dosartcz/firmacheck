@@ -32,6 +32,21 @@ export function SavedCompanies({
     }
   }
 
+  async function handleShare() {
+    const lines = companies.map(
+      (c) => `${c.name} · IČO: ${c.ico} · ${c.address}`
+    );
+    const text = `${t("savedShareBody")}\n\n${lines.join("\n")}`;
+    const subject = t("savedShareSubject");
+
+    if (typeof navigator !== "undefined" && navigator.share) {
+      await navigator.share({ title: subject, text });
+    } else {
+      const mailto = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
+      window.open(mailto, "_blank");
+    }
+  }
+
   return (
     <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
       <header className="mb-4 flex flex-wrap items-center justify-between gap-3">
@@ -67,6 +82,13 @@ export function SavedCompanies({
             className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
           >
             {copied ? t("savedCopiedJson") : t("savedCopyJson")}
+          </button>
+          <button
+            onClick={handleShare}
+            disabled={companies.length === 0}
+            className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+          >
+            {t("savedShare")}
           </button>
         </div>
       </header>
