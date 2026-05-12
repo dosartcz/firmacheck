@@ -26,9 +26,20 @@ function getIdb(): Promise<IDBPDatabase> {
 
 async function loadSql(): Promise<SqlJsStatic> {
   if (!sqlPromise) {
-    sqlPromise = initSqlJs({
-      locateFile: (file) => `/sql-wasm/${file}`,
-    });
+    sqlPromise = (async () => {
+      // Fetch the WASM binary ourselves and pass it through, instead of
+      // relying on sql.js's internal locateFile resolution which can fail
+      // when bundled (emscripten reports "both async and sync fetching of
+      // the wasm failed").
+      const res = await fetch("/sql-wasm/sql-wasm.wasm");
+      if (!res.ok) {
+        throw new Error(
+          `Selhalo načtení sql-wasm.wasm (${res.status}). Zkontrolujte, že je soubor v /public/sql-wasm/.`
+        );
+      }
+      const wasmBinary = await res.arrayBuffer();
+      return initSqlJs({ wasmBinary });
+    })();
   }
   return sqlPromise;
 }
