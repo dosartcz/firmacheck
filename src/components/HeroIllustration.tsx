@@ -18,7 +18,10 @@ export function HeroIllustration() {
             {t("heroEyebrow")}
           </p>
           <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-slate-100">
-            Ověřte českou firmu<br className="sm:hidden" /> za pár sekund.
+            <span className="sm:hidden">
+              {t("heroHeadingBreak")}<br />{t("heroHeading").slice(t("heroHeadingBreak").length).trim()}
+            </span>
+            <span className="hidden sm:inline">{t("heroHeading")}</span>
           </h1>
           <p className="mt-3 max-w-prose text-slate-600 dark:text-slate-300">
             {t("heroSubheading")}

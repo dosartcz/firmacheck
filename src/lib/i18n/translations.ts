@@ -18,6 +18,7 @@ interface Dict {
   // Hero
   heroEyebrow: string;
   heroHeading: string;
+  heroHeadingBreak: string;
   heroSubheading: string;
   heroIllustrationAlt: string;
 
@@ -107,6 +108,7 @@ interface Dict {
 const cs: Dict = {
   heroEyebrow: "FirmaCheck",
   heroHeading: "Ověřte českou firmu za pár sekund.",
+  heroHeadingBreak: "Ověřte českou firmu",
   heroSubheading:
     "Zadejte IČO, případně i název. Aplikace načte aktuální údaje z ARESu, zobrazí sídlo firmy na mapě, uloží odpověď do SQLite cache a umožní vám firmy hromadně exportovat.",
   heroIllustrationAlt: "Ilustrace ověřování firmy",
@@ -192,6 +194,7 @@ const cs: Dict = {
 const en: Dict = {
   heroEyebrow: "FirmaCheck",
   heroHeading: "Verify a Czech company in seconds.",
+  heroHeadingBreak: "Verify a Czech company",
   heroSubheading:
     "Enter a Czech company registration number (IČO), and optionally a name. The app fetches up-to-date data from ARES, shows the registered office on a map, caches the response in local SQLite, and lets you bulk export your verified companies.",
   heroIllustrationAlt: "Illustration of company verification",
@@ -277,6 +280,7 @@ const en: Dict = {
 const de: Dict = {
   heroEyebrow: "FirmaCheck",
   heroHeading: "Überprüfen Sie eine tschechische Firma in Sekunden.",
+  heroHeadingBreak: "Überprüfen Sie eine tschechische Firma",
   heroSubheading:
     "Geben Sie die tschechische Firmennummer (IČO) und optional einen Namen ein. Die App lädt aktuelle Daten aus ARES, zeigt den Firmensitz auf der Karte, speichert die Antwort in einem lokalen SQLite-Cache und ermöglicht den Export überprüfter Firmen.",
   heroIllustrationAlt: "Illustration der Firmenprüfung",
