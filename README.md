@@ -169,11 +169,10 @@ Export exportuje **skutečně uložené firmy** — žádná ukázková data.
 
 ## Použité AI nástroje
 
-- **Claude** (Anthropic, claude-opus-4-7) — návrh architektury (volba
-  sql.js+IndexedDB nad Turso), generování boilerplate komponent, validace IČO
-  podle oficiálního checksum algoritmu, ladění edge case'ů.
-- **Midjourney / DALL·E 3 / Imagen 3** (doporučení) — generování hero
-  ilustrace. V repu je SVG placeholder; prompty viz [AI_PROMPTS.md](./AI_PROMPTS.md).
+- **Claude** (Anthropic) — návrh architektury (volba sql.js+IndexedDB nad Turso),
+  generování boilerplate komponent, validace IČO podle oficiálního checksum algoritmu,
+  ladění edge case'ů a vygenerování hero ilustrace (`hero-illustration.svg`) na základě
+  promptu viz [AI_PROMPTS.md](./AI_PROMPTS.md).
 
 **Aplikace samotná nevolá žádné runtime LLM API** — všechna logika běží přes
 ARES, Mapy.com a SQLite v prohlížeči.
@@ -244,13 +243,10 @@ IndexedDB v DevTools. V dalších iteracích by se hodilo přidat TTL na
 - **Validace názvu firmy** s nuancí — teď je porovnání jednoduché (normalizace
   diakritiky + strip právní formy); rozšířit o Levenshtein distance.
 - **Statistika cache** — kolik dotazů ušetřil cache vs. API.
-- **Tmavý režim** — aktuálně jen světlé téma.
 - **Unit testy** pro `validateIco`, `compareNames`, `parseAresResponse`.
 - **E2E test** s Playwrightem pro happy-path flow.
 - **A11y audit** — focus rings, ARIA labels, keyboard nav v mapě.
 - **PWA manifest** + service worker pro plně offline použití.
-- **AI ilustrace skutečně vygenerovaná** — SVG placeholder vyměnit za
-  Midjourney/Imagen output (viz `AI_PROMPTS.md`).
 
 ---
 
@@ -259,7 +255,7 @@ IndexedDB v DevTools. V dalších iteracích by se hodilo přidat TTL na
 ```
 firmacheck/
 ├── public/
-│   ├── hero-illustration.svg     # AI placeholder vizuál (viz AI_PROMPTS.md)
+│   ├── hero-illustration.svg     # AI vizuál vygenerovaný pomocí Claude (viz AI_PROMPTS.md)
 │   └── sql-wasm/sql-wasm.wasm    # SQLite WASM binary
 ├── src/
 │   ├── app/
